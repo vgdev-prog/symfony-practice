@@ -1,0 +1,43 @@
+ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    padding: 0;
+}
+
+/* Form Validation Errors Styling */
+.form-errors {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.form-errors ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.form-errors li {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    padding: 0;
+    text-align: left;
+}
+
+/* Remove any bullet points or markers */
+.form-errors ul::before,
+.form-errors li::before,
+.form-errors ul::marker,
+.form-errors li::marker {
+    display: none !important;
+    content: none !important;
+}
+
+/* Убираем подсветку инпутов - только текст ошибок красный */

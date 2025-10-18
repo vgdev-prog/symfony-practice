@@ -1,0 +1,51 @@
+<header class="header">
+    <div class="container-fluid justify-content-between">
+        <button class="mobile-menu-toggler" id="mobile_menu_toggler">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <a href="{{ path('admin.dashboard.app_admin_dashboard_index') }}" class="logotype">
+            <img src="{{ asset('build/images/icons/logo_366x79.svg') }}" alt="RankedChoice Admin">
+        </a>
+        <nav class="main-nav">
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="{{ path('admin.dashboard.app_admin_dashboard_index') }}">
+                        <div><i class="fas fa-tachometer-alt me-1"></i> Dashboard</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div><i class="fas fa-users me-1"></i> Users</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div><i class="fas fa-vote-yea me-1"></i> Polls</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div><i class="fas fa-chart-bar me-1"></i> Reports</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div><i class="fas fa-cog me-1"></i> Settings</div>
+                    </a>
+                </li>
+
+                <li class="menu-item font-weight-bold">
+                    <a href="{{ path('homepage') }}">
+                        <div><i class="fas fa-external-link-alt me-1"></i> Site</div>
+                    </a>
+                </li>
+                <li class="menu-item font-weight-bold">
+                    <a href="{{ path('admin.logout') }}">
+                        <div><i class="fas fa-sign-out-alt me-1"></i> Logout</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

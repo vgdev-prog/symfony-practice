@@ -1,0 +1,80 @@
+{% extends 'main/layouts/base.html.twig' %}
+
+{% block title %}Edit Product - RankedChoice{% endblock %}
+
+{% block body %}
+    <div class="page-content pt-4 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="page-details mt-4">
+                        <h1 class="h3 mb-3 font-weight-normal title-gradient-1">
+                            Edit Product
+                        </h1>
+
+                        <div class="card">
+                            <div class="card-body">
+                                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+                                    <div class="form-group">
+                                        {{ form_label(form.title, 'Product Title', {
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                        {{ form_widget(form.title, {
+                                            'attr': {'class': 'form-control'}
+                                        }) }}
+                                        {{ form_errors(form.title) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(form.price, 'Price', {
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                        {{ form_widget(form.price, {
+                                            'attr': {'class': 'form-control'}
+                                        }) }}
+                                        {{ form_errors(form.price) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(form.quantity, 'Quantity', {
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                        {{ form_widget(form.quantity, {
+                                            'attr': {'class': 'form-control'}
+                                        }) }}
+                                        {{ form_errors(form.quantity) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        {{ form_label(form.description, 'Description', {
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                        {{ form_widget(form.description, {
+                                            'attr': {'class': 'form-control', 'rows': 4}
+                                        }) }}
+                                        {{ form_errors(form.description) }}
+                                    </div>
+
+                                    {{ form_rest(form) }}
+
+                                    <div class="form-footer-buttons mt-3">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fas fa-save"></i>
+                                            <span>SAVE PRODUCT</span>
+                                        </button>
+                                        <a href="{{ path('homepage') }}" class="btn btn-link btn-dark">
+                                            <i class="fas fa-arrow-left"></i>
+                                            <span>BACK TO HOMEPAGE</span>
+                                        </a>
+                                    </div>
+
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

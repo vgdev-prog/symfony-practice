@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>{% block title %}Admin Panel - {% block title_detailed %}Dashboard{% endblock %} | RankedChoice{% endblock %}</title>
+    <meta name="keywords" content="admin, dashboard, management">
+    <meta name="description" content="RankedChoice Admin Panel">
+    <link rel="icon" type="image/x-icon" href="{{ asset('build/images/icons/favicon.ico') }}" />
+    
+    <!-- Admin CSS -->
+    <link href="{{ asset('admin-assets/admin.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        {% include 'admin/components/sidebar.html.twig' %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                {% include 'admin/components/topbar.html.twig' %}
+
+                <div class="container-fluid">
+                    <div data-controller="flash" data-flash-messages-value="{{ app.flashes|json_encode|e('html_attr') }}"></div>
+
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; RankedChoice {{ 'now'|date('Y') }}</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Admin JavaScript -->
+    <script src="{{ asset('admin-assets/admin.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>
