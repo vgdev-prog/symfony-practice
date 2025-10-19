@@ -8,6 +8,7 @@ use App\Entity\Product;
 use App\Form\Admin\CreateProductForm;
 use App\Form\Handler\ProductFormHandler;
 use App\Repository\ProductRepository;
+use App\Utils\Manager\ProductManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,12 +65,27 @@ class ProductController extends AbstractController
                 return $this->redirectToRoute('admin.product.listAll');
         }
 
-        return $this->render('admin/product/create.html.twig', ['form' => $form, 'product' => $product, 'isEdit' => $isEdit]);
+        return $this->render('admin/product/create.html.twig',
+            [
+                'form' => $form,
+                'product' => $product,
+                'isEdit' => $isEdit,
+                'images' => $product->getProductImages()->getValues()
+            ]
+        );
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete()
+    #[Route('/{id}', name: 'delete', methods: ['GET'])]
+    public function delete(Product $product, ProductManager $productManager, Request $request): Response
     {
+        $token = $request->getSession()->get('_token');
+        if ($this->isCsrfTokenValid('delete-product-'.$product->getId(), $token)) {
+            return $this->redirectToRoute('admin.product.listAll');
+        }
+        $productManager->remove($product);
 
+        $this->addFlash('success', 'Product deleted');
+
+       return $this->redirectToRoute('admin.product.listAll');
     }
 }
