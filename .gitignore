@@ -27,3 +27,4 @@ compose.yaml
 .env.dev
 .env.test
 .claude
+/public/uploads/
