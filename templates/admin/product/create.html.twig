@@ -1,26 +1,36 @@
 {% extends 'admin/layouts/base.html.twig' %}
 {% block title_detailed %}Edit Product{% endblock %}
+{% set breadcrumbs = [
+    {
+        'label':'Products',
+        'url': path('admin.product.listAll')
+    },
+    {
+        'label': isEdit ? 'Edit Product' : 'Add New Product'
+    },
+] %}
+{% if isEdit %}
+    {% set actionButton =  {
+        'label': 'Add Product',
+        'url' : path('admin.product.create'),
+        'icon': 'fa-plus'
+    } %}
+{% else %}
+    {% set actionButton =  {
+        'label': 'Back to List',
+        'url' : path('admin.product.listAll'),
+        'icon': 'fa-list'
+    } %}
+{% endif %}
 
 {% block body %}
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <a
-                        href="{{ path('admin.product.listAll') }}"
-                        class="font-weight-bold text-primary"
-                    >Products</a>
-                    <div class="ml-2 mr-2">/</div>
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        {% if isEdit %}
-                            Edit Product
-                        {% else %}
-                            Add new
-                        {% endif %}
-                    </h6>
-                </div>
-            </div>
-        </div>
+
+        {% include 'admin/components/breadcrumbs.html.twig' with {
+            'actionButton': actionButton,
+            'breadcrumbs': breadcrumbs
+        } %}
+
         <div class="card-body">
             {{ form_start(form) }}
             <div class="form-group row">
@@ -83,6 +93,30 @@
                     </div>
                 </div>
             </div>
+
+            {% if images|length %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="text-gray-600">Current images:</span>
+                    </div>
+                </div>
+
+                {% for image in images %}
+                    <div class="row mt-2">
+                        <div class="col-md-5">
+                            <img src="{{ asset('uploads/images/products/' ~ product.id ~ '/' ~ image.filenameMiddle) }}" alt="{{ image.filenameMiddle }}">
+                        </div>
+                        <div class="col-md-7">
+                            <a href="{{ path('admin.product_image.delete', {'id': image.id}) }}" class="btn btn-outline-info">
+                                DELETE
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+
 
             <div class="form-group row">
                 <div class="col-md-1"></div>
