@@ -6,7 +6,7 @@ namespace App\Exception;
 
 use RuntimeException;
 
-class UserAlreadyExistException extends RuntimeException
+class UserAlreadyExistException extends AbstractDomainException
 {
     public function __construct(
         private readonly string $userEmail,
@@ -20,7 +20,7 @@ class UserAlreadyExistException extends RuntimeException
         );
     }
 
-    public function getDomainError()
+    public function getDomainError(): string
     {
         return ErrorCode::USER_ALREADY_EXISTS->value;
     }
