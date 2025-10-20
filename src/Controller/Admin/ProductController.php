@@ -36,11 +36,11 @@ class ProductController extends AbstractController
     }
 
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function create(Request $request,ProductFormHandler $formHandler,  ?int $id = null): Response
+    #[Route('/edit/{slug}', name: 'edit', methods: ['GET', 'POST'])]
+    public function create(Request $request,ProductFormHandler $formHandler,  ?string $slug = null): Response
     {
-        if ($id) {
-            $product = $this->productRepository->find($id);
+        if ($slug) {
+            $product = $this->productRepository->findOneBySlug(slug: $slug);
             if (!$product) {
                 $this->addFlash('error', 'Product not found');
                 return $this->redirectToRoute('admin.product.listAll');
