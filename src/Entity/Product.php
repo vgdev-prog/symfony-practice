@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -22,6 +24,12 @@ class Product
     #[Assert\Length(min: 2, max: 255, minMessage: "Title must be at least 2 characters", maxMessage: "Title cannot exceed 255 characters")]
     private ?string $title = null;
 
+    #[ORM\Column(length: 255,unique: true)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug = null;
+
+
+
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     #[Assert\NotBlank(message: "Price cannot be empty")]
     #[Assert\Positive(message: "Price must be positive")]
@@ -33,7 +41,7 @@ class Product
     private ?int $quantity = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -52,7 +60,7 @@ class Product
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
         $this->is_published = false;
         $this->is_deleted = false;
         $this->productImages = new ArrayCollection();
@@ -66,6 +74,11 @@ class Product
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function setTitle(string $title): static
@@ -99,12 +112,12 @@ class Product
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
@@ -173,6 +186,13 @@ class Product
                 $productImage->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }
