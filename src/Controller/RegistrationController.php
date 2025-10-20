@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
                     ->from(new Address('robot@ranked-choice.com', 'Robot'))
                     ->to((string) $user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('main/security/confirmation_email.html.twig')
+                    ->htmlTemplate('main/email/security/confirmation_email.html.twig')
             );
 
             $this->addFlash('success', 'Registration successful! Please check your email to verify your account.');
