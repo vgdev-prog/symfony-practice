@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\DTO\EditProductModel;
 use App\Entity\Product;
 use App\Form\Admin\CreateProductForm;
 use App\Form\Handler\ProductFormHandler;
@@ -39,38 +40,49 @@ class ProductController extends AbstractController
     #[Route('/edit/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function create(Request $request,ProductFormHandler $formHandler,  ?string $slug = null): Response
     {
+        $productEntity = null;
+        $isEdit = false;
+
         if ($slug) {
-            $product = $this->productRepository->findOneBySlug(slug: $slug);
-            if (!$product) {
+            $productEntity = $this->productRepository->findOneBySlug(slug: $slug);
+
+            if (!$productEntity) {
                 $this->addFlash('error', 'Product not found');
                 return $this->redirectToRoute('admin.product.listAll');
             }
             $isEdit = true;
         } else {
-            $product = new Product();
-            $isEdit = false;
+            $productEntity = new Product();
         }
+
+        $editModel = EditProductModel::makeFromProduct($productEntity);
 
         $form = $this->createForm(
             type: CreateProductForm::class,
-            data: $product
+            data: $editModel
         );
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product = $formHandler->processEditForm($product, $form);
-                $message = $isEdit ? 'Product updated' : 'Product created';
-                $this->addFlash('success', $message);
-                return $this->redirectToRoute('admin.product.listAll');
+            $formHandler->processEditForm($editModel, $productEntity);
+
+            $message = $isEdit ? 'Product updated' : 'Product created';
+            $this->addFlash('success', $message);
+
+            return $this->redirectToRoute('admin.product.listAll');
         }
+
+        $images = $productEntity->getId()
+            ? $productEntity->getProductImages()->getValues()
+            : [];
 
         return $this->render('admin/product/create.html.twig',
             [
                 'form' => $form,
-                'product' => $product,
+                'product' => $productEntity,
                 'isEdit' => $isEdit,
-                'images' => $product->getProductImages()->getValues()
+                'images' => $images
             ]
         );
     }
