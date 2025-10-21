@@ -5,10 +5,7 @@
     {
         'label':'Products',
         'url': path('admin.product.listAll')
-    },
-    {
-        'label': 'Add New Product'
-    },
+    }
 ] %}
 {% set actionButton =  {
     'label': 'Add Product',
@@ -58,7 +55,7 @@
                             <td>
                                 <i class="fas fa-check fa-sm" style="color: {% if product.isPublished %}green{% else %}lightgray{% endif %};"></i></td>
                             <td>
-                                <a href="{{ path('admin.product.edit',{'id':product.slug }) }}" class="btn btn-outline-info">Edit</a>
+                                <a href="{{ path('admin.product.edit',{'slug':product.slug }) }}" class="btn btn-outline-info">Edit</a>
                                 <a href="{{ path('admin.product.delete',{'id':product.id}) }}" class="btn btn-outline-danger">Delete</a>
                             </td>
                         </tr>
